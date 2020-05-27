@@ -2,22 +2,19 @@ version: '3'
 
 services:
   bitbucket:
-    image: blacklabelops/bitbucket
-    depends_on:
-      - postgres_bitbucket
+    image: registry.gitlab.com/notch8/bbfops/bitbucket:${TAG}
+    build: .
     networks:
       - bitbucketnet
     volumes:
       - bitbucketdata:/var/atlassian/bitbucket
     ports:
-      - '80:7990'
+      - '7990:7990'
     environment:
       - 'BITBUCKET_PROXY_NAME='
       - 'BITBUCKET_PROXY_PORT='
       - 'BITBUCKET_PROXY_SCHEME='
       - 'BITBUCKET_DELAYED_START='
-      - 'DOCKER_WAIT_HOST=postgres_bitbucket'
-      - 'DOCKER_WAIT_PORT=5432'
     labels:
       com.blacklabelops.description: "Atlassian Bitbucket"
       com.blacklabelops.service: "bitbucket"
